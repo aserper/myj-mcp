@@ -13,15 +13,31 @@ MCP server for the JCC of Greater Boston (Leventhal-Sidman JCC) mobile app, buil
 **Reservations** — view your own + family member reservations
 **Info** — facility details, alerts, other programs, video content, feedback
 
-## Setup
+## Install & Run
+
+### uvx (recommended)
+
+```bash
+uvx myj-mcp
+```
+
+### uv
 
 ```bash
 uv venv && uv pip install -e .
+python -m myj_mcp
+```
+
+### Docker
+
+```bash
+docker run --rm -e UPACE_EMAIL="you@email.com" -e UPACE_PASSWORD="pass" \
+  ghcr.io/aserper/myj-mcp:latest
 ```
 
 ## Configuration
 
-Set credentials in `.mcp.json` or environment variables:
+Set credentials via environment variables:
 
 ```bash
 export UPACE_EMAIL="your@email.com"
@@ -30,13 +46,12 @@ export UPACE_PASSWORD="yourpassword"
 
 ### Claude Code
 
-`.mcp.json`:
 ```json
 {
   "mcpServers": {
     "myj": {
-      "command": "/home/amit/myj-mcp/.venv/bin/python",
-      "args": ["-m", "myj_mcp"],
+      "command": "uvx",
+      "args": ["myj-mcp"],
       "env": {
         "UPACE_EMAIL": "your@email.com",
         "UPACE_PASSWORD": "yourpassword"
@@ -46,10 +61,21 @@ export UPACE_PASSWORD="yourpassword"
 }
 ```
 
-## Run
+Or with Docker:
 
-```bash
-python -m myj_mcp
+```json
+{
+  "mcpServers": {
+    "myj": {
+      "command": "docker",
+      "args": ["run", "--rm", "-i", "ghcr.io/aserper/myj-mcp:latest"],
+      "env": {
+        "UPACE_EMAIL": "your@email.com",
+        "UPACE_PASSWORD": "yourpassword"
+      }
+    }
+  }
+}
 ```
 
 ## Tools
@@ -80,6 +106,13 @@ python -m myj_mcp
 | `video_categories` | Video content categories |
 | `video_listings` | Video listings by category |
 | `submit_feedback` | Rate a class/event/equipment (1-5) |
+
+## Testing
+
+```bash
+uv pip install pytest
+pytest tests/ -v
+```
 
 ## API
 

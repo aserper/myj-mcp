@@ -10,3 +10,4 @@ decompiled/
 *.xapk
 xapk_extracted/
 .mcp.json
+.pytest_cache/
