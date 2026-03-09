@@ -15,15 +15,17 @@ MCP server for the JCC of Greater Boston (Leventhal-Sidman JCC) mobile app, buil
 
 ## Install & Run
 
-### uvx (recommended)
+### From GitHub (recommended)
 
 ```bash
-uvx myj-mcp
+uvx --from git+https://github.com/aserper/myj-mcp.git myj-mcp
 ```
 
-### uv
+### Local development
 
 ```bash
+git clone https://github.com/aserper/myj-mcp.git
+cd myj-mcp
 uv venv && uv pip install -e .
 python -m myj_mcp
 ```
@@ -51,7 +53,7 @@ export UPACE_PASSWORD="yourpassword"
   "mcpServers": {
     "myj": {
       "command": "uvx",
-      "args": ["myj-mcp"],
+      "args": ["--from", "git+https://github.com/aserper/myj-mcp.git", "myj-mcp"],
       "env": {
         "UPACE_EMAIL": "your@email.com",
         "UPACE_PASSWORD": "yourpassword"
